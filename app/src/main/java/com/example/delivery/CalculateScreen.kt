@@ -1,5 +1,7 @@
 package com.example.delivery
 
+import android.annotation.SuppressLint
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -23,6 +25,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
@@ -44,8 +47,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.text.font.FontWeight
@@ -297,17 +302,17 @@ fun CalculateScreen(onNavigateToHome: () -> Unit = {},
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .padding(horizontal = 2.dp, vertical = 8.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFF8C00)
                 ),
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(24.dp)
             ) {
                 Text(
                     text = "Calculate",
-                    fontSize = 16.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color.Black,
+                    color = Color.White,
                 )
             }
 
@@ -391,23 +396,43 @@ fun CategoryChip(
         modifier = Modifier
             .clip(RoundedCornerShape(20.dp))
             .background(
-                color = if (category.isSelected) Color(0xFF6B46C1).copy(alpha = 0.1f) else Color.Transparent
+                color = if (category.isSelected) Color.Black else Color.Transparent
             )
             .border(
                 width = 1.dp,
-                color = if (category.isSelected) Color(0xFF6B46C1) else Color.LightGray,
+                color = Color.Black,
                 shape = RoundedCornerShape(20.dp)
             )
             .clickable { onToggle() }
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 12.dp, vertical = 8.dp)
+            .animateContentSize()
 
     ) {
-        Text(
-            text = category.name,
-            fontSize = 14.sp,
-            color = if (category.isSelected) Color(0xFF6B46C1) else Color.Gray,
-            textAlign = TextAlign.Center
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(2.dp)
+        ) {
+            if (category.isSelected) {
+            Icon(
+                imageVector = Icons.Default.Check,
+                contentDescription = "Selected",
+                tint = Color(0xFFF5F5F8),
+                modifier = Modifier
+                    .size(10.dp)
+                    .graphicsLayer {
+                        alpha = if (category.isSelected) 1f else 0f
+                    }
+            )
+          }
+            Text(
+                text = category.name,
+                fontSize = 14.sp,
+                color = if (category.isSelected) Color(0xFFF5F5F8) else Color.Black,
+                textAlign = TextAlign.Center
+            )
+
+        }
+
     }
 }
 

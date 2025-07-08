@@ -1,5 +1,7 @@
 package com.example.delivery
 
+import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,10 +19,16 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -36,6 +44,7 @@ fun DeliveryResultsDialog(
     onDismiss: () -> Unit = {}
 ) {
     if (isVisible) {
+        val amountNumber = estimatedAmount.replace("$", "").toIntOrNull() ?: 0
         Dialog(
             onDismissRequest = onDismiss,
             properties = DialogProperties(
@@ -100,11 +109,9 @@ fun DeliveryResultsDialog(
 
                         //Amount
 
-                        Text(
-                            text = estimatedAmount,
-                            fontSize = 32.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFF00C851)
+                        AnimatedAmountOnAppear(
+                            isVisible = isVisible,
+                            target = estimatedAmount.replace("$", "").toIntOrNull() ?: 0
                         )
 
                         Text(
@@ -139,8 +146,8 @@ fun DeliveryResultsDialog(
                             shape = RoundedCornerShape(12.dp)
                         ) {
                             Text(
-                                text = "Back to home",
-                                fontSize = 16.sp,
+                                text = "Done",
+                                fontSize = 20.sp,
                                 fontWeight = FontWeight.SemiBold,
                                 color = Color.White
                             )
@@ -220,3 +227,29 @@ fun PackageIllustration() {
         }
     }
 }
+
+
+
+@Composable
+fun AnimatedAmountOnAppear(
+    isVisible: Boolean,
+    target: Int,
+    modifier: Modifier = Modifier
+) {
+    var animateTo by remember { mutableStateOf(0) }
+    LaunchedEffect(isVisible) {
+        if (isVisible) animateTo = target else animateTo = 0
+    }
+    val animatedValue by animateIntAsState(
+        targetValue = animateTo,
+        animationSpec = tween(durationMillis = 1000)
+    )
+    Text(
+        text = "$${animatedValue}",
+        fontSize = 32.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color(0xFF00C851),
+        modifier = modifier
+    )
+}
+
