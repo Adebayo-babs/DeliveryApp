@@ -29,7 +29,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.navigation.NavController
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -68,7 +67,7 @@ enum class ShipmentStatus(val displayName: String, val color: Color, val backgro
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShipmentScreen(
-    paddingValues: PaddingValues, onNavigateToHome: () -> Unit = {}) {
+    paddingValues: PaddingValues, onBack: () -> Unit) {
 
     var selectedStatus by remember { mutableStateOf(ShipmentStatus.ALL) }
 
@@ -166,7 +165,7 @@ fun ShipmentScreen(
                         )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateToHome) {
+                    IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Back",
@@ -379,6 +378,6 @@ fun StatusIndicator(status: ShipmentStatus) {
 @Composable
 fun ShipmentScreenPreview() {
     DeliveryTheme {
-        ShipmentScreen(paddingValues = PaddingValues(0.dp))
+        ShipmentScreen(onBack = {}, paddingValues = PaddingValues(0.dp))
     }
 }

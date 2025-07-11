@@ -68,6 +68,7 @@ data class Vehicle(
 
 @Composable
 fun HomeScreen(
+    onNavigate: (String) -> Unit,
     onNotificationClick: () -> Unit = {},
     onChatClick: () -> Unit = {},
     paddingValues: PaddingValues
@@ -104,7 +105,7 @@ fun HomeScreen(
             Column {
                 // Top Row with Profile and Notification
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 50.dp, start = 20.dp, end = 20.dp, bottom = 20.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = 50.dp, start = 20.dp, end = 20.dp, bottom = 10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -191,13 +192,15 @@ fun HomeScreen(
                             Color.White,
                             CircleShape
                         ),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        modifier = Modifier.weight(1f).padding(start = 15.dp, bottom = 15.dp, top = 15.dp, end = 55.dp)
+                        modifier = Modifier.weight(1f)
+                            .padding(start = 15.dp, bottom = 15.dp,
+                                top = 15.dp, end = 5.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Default.Search,
@@ -262,7 +265,7 @@ fun HomeScreen(
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Black,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 6.dp)
             )
 
             // Tracking Card
@@ -302,7 +305,7 @@ fun HomeScreen(
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(6.dp))
 
                     // Sender and Receiver Info
                     Row(
@@ -400,7 +403,7 @@ fun HomeScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(6.dp))
 
                     // Add Stop Button
                     TextButton(
@@ -423,7 +426,7 @@ fun HomeScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             // Available Vehicles Section
             Text(
@@ -431,7 +434,7 @@ fun HomeScreen(
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Black,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 6.dp)
             )
 
             // Vehicles List
@@ -445,9 +448,18 @@ fun HomeScreen(
             }
 
             // Add extra space at the bottom to ensure content is scrollable
-            Spacer(modifier = Modifier.height(200.dp))
+            Spacer(modifier = Modifier.height(2.dp))
+
         }
+
+        BottomNavigationBar(
+            onCalculateClick = { onNavigate("calculate")},
+            onShipmentHistoryClick = {onNavigate("shipment")},
+            onProfileClick = {onNavigate("profile")}
+        )
     }
+
+
 }
 
 
@@ -606,7 +618,8 @@ fun PlaneIllustration() {
 @Composable
 fun BottomNavigationBar(
     onCalculateClick: () -> Unit,
-    onShipmentHistoryClick: () -> Unit
+    onShipmentHistoryClick: () -> Unit,
+    onProfileClick: () -> Unit
 ) {
     NavigationBar(
         containerColor = Color.White,
@@ -656,7 +669,7 @@ fun BottomNavigationBar(
             },
             label = { Text("Profile") },
             selected = false,
-            onClick = { }
+            onClick = onProfileClick
         )
     }
 }

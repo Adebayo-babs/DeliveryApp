@@ -1,6 +1,5 @@
 package com.example.delivery
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,8 +15,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -47,12 +44,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -65,10 +60,10 @@ data class PackingOption(val name: String, val icon: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalculateScreen(onNavigateToHome: () -> Unit = {},
-                    onCalculateClick: () -> Unit = {},
-                    onBackToHome: () -> Unit = {},
-                    paddingValues: PaddingValues
+fun CalculateScreen(
+    onCalculateClick: () -> Unit = {},
+    onBack: () -> Unit,
+    paddingValues: PaddingValues
 ) {
     var showResultsDialog by remember { mutableStateOf(false)}
     var senderLocation by remember { mutableStateOf("") }
@@ -113,7 +108,7 @@ fun CalculateScreen(onNavigateToHome: () -> Unit = {},
                 )
             },
             navigationIcon = {
-                IconButton(onClick = onNavigateToHome) {
+                IconButton(onClick = onBack) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back",
@@ -333,7 +328,7 @@ fun CalculateScreen(onNavigateToHome: () -> Unit = {},
         estimatedAmount = "$1460",
         onBackToHome = {
             showResultsDialog = false
-            onBackToHome()
+            onBack()
         },
         onDismiss = {
             showResultsDialog = false
@@ -440,6 +435,6 @@ fun CategoryChip(
 @Composable
 fun CalculateScreenPreview() {
     DeliveryTheme {
-        CalculateScreen(paddingValues = PaddingValues(0.dp))
+        CalculateScreen(onBack = {}, paddingValues = PaddingValues(0.dp))
     }
 }

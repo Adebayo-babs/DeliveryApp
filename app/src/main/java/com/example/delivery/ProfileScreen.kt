@@ -62,7 +62,7 @@ data class ProfileMenuItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen (
-    onNavigateToHome: () -> Unit = {},
+    onBack: () -> Unit,
     paddingValues: PaddingValues = PaddingValues(0.dp)
 ) {
     val profileMenuItems = listOf(
@@ -94,7 +94,7 @@ fun ProfileScreen (
                 )
             },
             navigationIcon = {
-                IconButton(onClick = onNavigateToHome) {
+                IconButton(onClick = onBack) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = "Back",
@@ -383,6 +383,6 @@ fun ProfileMenuRow(
 @Composable
 fun ProfileScreenPreview() {
     DeliveryTheme {
-        ProfileScreen(paddingValues = PaddingValues(0.dp))
+        ProfileScreen( onBack = {}, paddingValues = PaddingValues(0.dp))
     }
 }
