@@ -97,8 +97,15 @@ fun DeliveryServiceApp() {
         )
     ) {
         when (currentScreen) {
-            "home" -> HomeScreen(paddingValues = PaddingValues(),
-                onNavigate = { screen -> navigateTo(screen)} )
+            "home" -> HomeScreen(
+                paddingValues = PaddingValues(),
+                onNavigate = { screen -> navigateTo(screen)}
+            )
+            "search" -> SearchScreen(
+                onBackClick = { navigateBack() },
+                onChatClick = {},
+                paddingValues = PaddingValues()
+            )
             "calculate" -> CalculateScreen(
                 onBack = { navigateTo("home") },
                 paddingValues = PaddingValues()
