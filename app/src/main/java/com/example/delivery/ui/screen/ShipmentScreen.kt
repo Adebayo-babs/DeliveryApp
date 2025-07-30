@@ -1,4 +1,4 @@
-package com.example.delivery
+package com.example.delivery.ui.screen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background

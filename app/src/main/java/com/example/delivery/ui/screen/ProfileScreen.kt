@@ -1,4 +1,4 @@
-package com.example.delivery
+package com.example.delivery.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

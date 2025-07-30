@@ -1,4 +1,4 @@
-package com.example.delivery
+package com.example.delivery.ui.screen
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
@@ -53,6 +53,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.delivery.ui.components.DeliveryResultsDialog
 import com.example.delivery.ui.theme.DeliveryTheme
 
 data class Category(val name: String, val isSelected: Boolean = false)
